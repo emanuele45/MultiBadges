@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE package-info SYSTEM "http://www.elkarte.net/site/package-info">
+<package-info xmlns="http://www.elkarte.net/site/package-info" xmlns:elk="http://www.elkarte.net/">
+	<license><![CDATA[
+/**
+ * Multi Badges
+ *
+ * @author  emanuele
+ * @license BSD http://opensource.org/licenses/BSD-3-Clause
+ *
+ * @version 0.0.1
+ */
+	]]></license>
+	<id>emanuele:multi_badges</id>
+	<name>Multi Badges</name>
+	<version>0.0.1</version>
+	<type>modification</type>
+	<install for="1.0 RC 1 - 1.0.99">
+		<require-file name="MultiBadges.class.php" destination="SUBSDIR" />
+		<require-file name="MultiBadges.template.php" destination="THEMEDIR" />
+		<require-file name="MultiBadges.english.php" destination="LANGUAGEDIR" />
+		<database>install.php</database>
+	</install>
+	<uninstall for="1.0 RC 1 - 1.0.99">
+		<remove-file name="SUBSDIR/MultiBadges.class.php" />
+		<remove-file name="LANGUAGEDIR/MultiBadges.english.php" />
+		<remove-file name="THEMEDIR/MultiBadges.template.php" />
+		<code>install.php</code>
+	</uninstall>
+</package-info>
