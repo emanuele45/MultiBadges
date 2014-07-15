@@ -10,21 +10,31 @@
 
 global $hooks, $mod_name;
 $hooks = array(
-		array(
-			'integrate_load_member_data',
-			'MultiBadges::tweak_query',
-			'SUBSDIR/MultiBadges.class.php',
-		),
-		array(
-			'integrate_add_member_data',
-			'MultiBadges::load_groups',
-			'SUBSDIR/MultiBadges.class.php',
-		),
-		array(
-			'integrate_prepare_display_context',
-			'MultiBadges::display_groups',
-			'SUBSDIR/MultiBadges.class.php',
-		),
+	array(
+		'integrate_load_member_data',
+		'MultiBadges::tweak_query',
+		'SUBSDIR/MultiBadges.class.php',
+	),
+	array(
+		'integrate_add_member_data',
+		'MultiBadges::load_groups',
+		'SUBSDIR/MultiBadges.class.php',
+	),
+	array(
+		'integrate_prepare_display_context',
+		'MultiBadges::display_groups',
+		'SUBSDIR/MultiBadges.class.php',
+	),
+	array(
+		'integrate_modify_membergroup_settings',
+		'MultiBadges::modify_membergroup_settings',
+		'SUBSDIR/MultiBadges.class.php',
+	),
+	array(
+		'integrate_save_membergroup_settings',
+		'MultiBadges::save_membergroup_settings',
+		'SUBSDIR/MultiBadges.class.php',
+	),
 );
 $mod_name = 'Multi Badges';
 

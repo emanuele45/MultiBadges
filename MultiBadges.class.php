@@ -65,6 +65,67 @@ class MultiBadges
 	}
 
 	/**
+	 * Saving settings?
+	 */
+	public static function save_membergroup_settings()
+	{
+		global $modSettings;
+
+		$mb_settings = array();
+
+		if (isset($_POST['mb_membergroups']))
+		{
+			foreach ($_POST['mb_membergroups'] as $id => $status)
+			{
+				if ($status == 'on')
+					$mb_settings[] = (int) $id;
+			}
+		}
+
+		updateSettings(array('mb_settings' => serialize($mb_settings)));
+	}
+
+	/**
+	 * Adds the settings
+	 *
+	 * @param mixed[] $config_vars
+	 */
+	public static function modify_membergroup_settings(&$config_vars)
+	{
+		global $txt, $context, $modSettings;
+
+		loadLanguage('MultiBadges');
+		loadTemplate('MultiBadges');
+
+		$context['mb_settings'] = !empty($modSettings['mb_settings']) ? @unserialize($modSettings['mb_settings']) : array();
+
+		require_once(SUBSDIR . '/Membergroups.subs.php');
+		$mb_membergroups = getBasicMembergroupData(array('all'));
+
+		// This is necessary for some missing options in getBasicMembergroupData (1.0 note)
+		{
+			$postgroups = getBasicMembergroupData('postgroups');
+			$postgroup_ids = array();
+			foreach ($postgroups as $val)
+				$postgroup_ids[] = $val['id'];
+		}
+
+		$context['mb_membergroups'] = array();
+		foreach ($mb_membergroups as $id => $val)
+		{
+			$context['mb_membergroups'][$id] = $val;
+			$context['mb_membergroups'][$id]['is_postgroup'] = in_array($val['id'], $postgroup_ids);
+			$context['mb_membergroups'][$id]['status'] = in_array($id, $context['mb_settings']) ? 'on' : 'off';
+		}
+
+		$config_vars[] = '';
+		$config_vars[] = array(
+			'callback',
+			'multi_badge_settings',
+		);
+	}
+
+	/**
 	 * Prepares the template to show the groups.
 	 * Is attached to the integrate_prepare_display_context hook
 	 * When a corresponding hook will be present in the PM area
@@ -92,7 +153,7 @@ class MultiBadges
 	}
 
 	/**
-	 * this does a bit of things, but in fact its duty is to return the piece
+	 * This does a bit of things, but in fact its duty is to return the piece
 	 * of relevant template
 	 *
 	 * @param int $id A member id
@@ -130,7 +191,7 @@ class MultiBadges
 	private function _queryGroups($ids)
 	{
 		// this sounds awful, we should do something about all these globals...
-		global $user_profile;
+		global $user_profile, $modSettings;
 
 		$to_load = array();
 		$user_groups = array();
@@ -157,6 +218,8 @@ class MultiBadges
 			)
 		);
 
+		$to_display = !empty($modSettings['mb_settings']) ? @unserialize($modSettings['mb_settings']) : array();
+
 		while ($row = $db->fetch_assoc($request))
 		{
 			$row['icons'] = explode('#', $row['icons']);
@@ -164,7 +227,7 @@ class MultiBadges
 			{
 				foreach ($groups as $group)
 				{
-					if ($row['id_group'] == $group)
+					if ($row['id_group'] == $group && in_array($group, $to_display))
 					{
 						$this->_loadedGroups[$id][] = $row;
 					}
