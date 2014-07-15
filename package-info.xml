@@ -19,7 +19,7 @@
 		<require-file name="MultiBadges.class.php" destination="SUBSDIR" />
 		<require-file name="MultiBadges.template.php" destination="THEMEDIR" />
 		<require-file name="MultiBadges.english.php" destination="LANGUAGEDIR" />
-		<database>install.php</database>
+		<code>install.php</code>
 	</install>
 	<uninstall for="1.0 RC 1 - 1.0.99">
 		<remove-file name="SUBSDIR/MultiBadges.class.php" />
