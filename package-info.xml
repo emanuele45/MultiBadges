@@ -8,12 +8,12 @@
  * @author  emanuele
  * @license BSD http://opensource.org/licenses/BSD-3-Clause
  *
- * @version 0.0.1
+ * @version 0.1.0
  */
 	]]></license>
 	<id>emanuele:multi_badges</id>
 	<name>Multi Badges</name>
-	<version>0.0.1</version>
+	<version>0.1.0</version>
 	<type>modification</type>
 	<install for="1.0 RC 1 - 1.0.99">
 		<require-file name="MultiBadges.class.php" destination="SUBSDIR" />
